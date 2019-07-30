@@ -1,0 +1,99 @@
+<script src="{{ plugin_path('Novalnet') }}/js/novalnet_sepa.js"></script>
+{% set nn_sepa_new_acc_details="1" %}
+{% set display_field = 'block' %}
+{% set ref_display_field = 'none' %}
+{% if iban is not empty %}
+{% set nn_sepa_new_acc_details="0" %}
+{% set display_field = 'none' %}
+{% set ref_display_field = 'block' %}
+{% endif %}
+<form method="post" id="nn_sepa_form" name="nn_sepa_form" action="{{nnPaymentProcessUrl}}">
+	<div class="modal-header">
+		<button type="button" aria-label="Close" data-dismiss="modal" class="close" onClick="window.location.reload();">
+			<span aria-hidden="true">x</span>
+		</button> 
+		<h4 class="modal-title">{{paymentName}}</h4>
+	</div>
+	<div class="modal-body">
+		<fieldset>		
+			<input type="hidden" id="paymentKey" name="paymentKey" value="{{paymentMopKey}}" />
+			<input type='hidden' id='nn_sepa_valid_dob_msg' id="nn_sepa_valid_dob_msg" value="{{trans("Novalnet::PaymentMethod.doberror")}}">
+			<input type="hidden" id="nn_account_display_text_saved" value="{{ trans("Novalnet::PaymentMethod.account_details_link_old") }}">
+			<input type="hidden" id="nn_account_display_text_new" value="{{ trans("Novalnet::PaymentMethod.account_details_link_new") }}">
+			<input type='hidden' id="nn_new_details" name="nn_new_details" value="{{nn_sepa_new_acc_details}}" />
+			<input type='hidden' id="save_payment" name="save_payment" value="">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="row">
+						<div class="col-xs-12 col-sm-12">
+							{% if oneclick == '1' and iban != '' %}
+								<h5>
+								<a id="nn_toggle_form" style="cursor:pointer;color: #008ebd;">{{ trans("Novalnet::PaymentMethod.account_details_link_new") }}</a>
+							   </h5>
+							
+							<div id="nn_saved_details" class="row" style="display:{{ref_display_field}};">
+								<div class="col-xs-12 col-sm-12">
+									<div class="input-unit">
+									<input type="text" value="{{endcustomername}}" readonly=true> 
+									<label for="sepa_holder">{{trans("Novalnet::PaymentMethod.sepa_account_holder_label")}}</label>
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-12">
+									<div class="input-unit">
+									<input type="text" value="{{iban}}" readonly=true> 
+									<label for="nn_sepa_iban">{{trans("Novalnet::PaymentMethod.sepa_iban_label")}}</label>
+									</div>
+								</div>
+								<input type='hidden' id="ref_tid" value="{{tid}}" name="ref_tid" />
+							</div>	
+							{% endif %}
+					
+							<div id="nn_new_card_details" class="row" style="display:{{display_field}};">
+								<div class="col-xs-12 col-sm-12">
+									<div class="input-unit">
+										<input type="text" name="nn_sepa_cardholder" value="{{endcustomername}}" id="nn_sepa_cardholder"> 
+										<label for="sepa_holder">{{trans("Novalnet::PaymentMethod.sepa_account_holder_label")}}*</label>
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-12">
+									 <div class="input-unit">
+										<input type="text" name="nn_sepa_iban" autocomplete="off" id="nn_sepa_iban">
+										<label for="nn_sepa_iban">{{trans("Novalnet::PaymentMethod.sepa_iban_label")}}*</label>
+									 </div>
+								</div>
+								{% if oneclick == "1" and customer_no != "0" %}
+								<div class="col-xs-12 col-sm-12" id="save_payment_block" style="display:{{display_field}};">
+										<input type="checkbox" id="savepayment" value="">{{trans("Novalnet::PaymentMethod.sepa_save_payment_data")}}
+								 </div>	
+								{% endif %}
+							</div>
+					 
+							<a href="#iban_details" data-toggle="collapse">{{trans("Novalnet::PaymentMethod.ibanMandate")}}</a>
+							<div id="iban_details" class="collapse card-body" style="background:whitesmoke;padding:3%;">
+							<div>{{trans("Novalnet::PaymentMethod.ibanDesc")}}</div><br>
+							<div><b>{{trans("Novalnet::PaymentMethod.creditorIdentifier")}} </div></b><br>
+							<div><b>{{trans("Novalnet::PaymentMethod.note")}}</b> {{trans("Novalnet::PaymentMethod.noteDesc")}}</div></div><br>
+
+							{% if nnGuaranteeStatus == "guarantee" %}
+							<div class="modal-title" style="color:#008EBF;"><b>{{trans("Novalnet::PaymentMethod.note")}}</b>{{trans("Novalnet::PaymentMethod.dobshowingreason")}}</div><br>
+								<div data-model="nn_sepa_birthday" class="input-unit">
+									<input type="date" name="nn_sepa_birthday" id="nn_sepa_birthday">
+									<label for="nn_sepa_birthday">{{trans("Novalnet::PaymentMethod.birthdate_label")}}</label>
+								</div>
+							</div>
+							{% endif %}	
+						</div> 
+					</div>
+				</div>		
+			</div>
+		</fieldset>
+	</div>	
+	
+	<div class="modal-footer">
+		<button type="submit" class="btn btn-primary" id="novalnet_form_btn">
+			<i class="fa fa-check" aria-hidden="true"> </i>
+			{{ trans("Novalnet::PaymentMethod.submit_button_text") }}
+		</button>
+	</div>
+	
+</form>

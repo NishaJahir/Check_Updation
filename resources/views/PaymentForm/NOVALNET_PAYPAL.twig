@@ -1,0 +1,74 @@
+<script src="{{ plugin_path('Novalnet') }}/js/novalnet_paypal.js"></script>
+{% set nn_paypal_new_acc_details="1" %}
+{% set display_field = 'block' %}
+{% set ref_display_field = 'none' %}
+{% if paypal_ref_id is not empty and tid is not empty %}
+{% set nn_paypal_new_acc_details="0" %}
+{% set display_field = 'none' %}
+{% set ref_display_field = 'block' %}
+{% endif %}
+<form method="post" id="nn_paypal_form" name="nn_paypal_form" action="{{nnPaymentProcessUrl}}">
+	<div class="modal-header">
+		<button type="button" aria-label="Close" data-dismiss="modal" class="close" onClick="window.location.reload();">
+			<span aria-hidden="true">x</span>
+		</button> 
+		<h4 class="modal-title">{{paymentName}}</h4>
+	</div>
+ 	<div class="modal-body">
+		<fieldset>		
+			<input type="hidden" id="paymentKey" name="paymentKey" value="{{paymentMopKey}}" />
+			<input type='hidden' id="nn_new_details" name="nn_new_details" value={{nn_paypal_new_acc_details}} />
+			<input type='hidden' id="save_payment" name="save_payment" value="">
+			<input type="hidden" id="nn_account_display_text_saved" value="{{ trans("Novalnet::PaymentMethod.paypal_account_details_link_old") }}">
+			<input type="hidden" id="nn_account_display_text_new" value="{{ trans("Novalnet::PaymentMethod.paypal_account_details_link_new") }}">
+	    
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="row">
+						<div class="col-xs-12 col-sm-12">
+							{% if oneclick == '1' and paypal_ref_id != '' and tid != '' %}
+							  <h5>
+								   <a id="nn_toggle_form" style="cursor:pointer;color: #008ebd;">{{ trans("Novalnet::PaymentMethod.paypal_account_details_link_new") }}</a>
+							  </h5>
+						
+							<div id="nn_saved_details" class="row" style="display:{{ref_display_field}};">
+								<div class="col-xs-12 col-sm-12">
+									<div class="input-unit">
+									  <input type="text" value="{{paypal_ref_id}}" readonly=true> 
+									  <label for="nn_paypal_reference_id">{{ trans("Novalnet::PaymentMethod.paypal_transaction_id") }}</label>
+									</div>
+								</div>
+								<div class="col-xs-12 col-sm-12">
+								   <div class="input-unit">
+									<input type="text" value="{{tid}}" readonly=true> 
+									<label for="nn_paypal_reference_tid">{{ trans("Novalnet::PaymentMethod.paypal_reference_tid") }}</label>
+									</div>
+								</div>
+								<input type='hidden' id="ref_tid" value="{{tid}}" name="ref_tid" />
+							</div>
+							{% endif %}
+					   
+				
+							<div id="nn_new_card_details" class="row" style="display:{{display_field}};">
+								{% if oneclick == '1' and customer_no != '0' %}
+								<div class="col-xs-12 col-sm-12" id="save_payment_block" style="display:{{display_field}};">
+										<input type="checkbox" id="savepayment" value=""> {{ trans("Novalnet::PaymentMethod.paypal_save_payment_data") }}
+								 </div>	
+								{% endif %}
+							</div>
+						</div> 
+					</div>
+				</div>
+			</div>
+		</fieldset>
+	</div>	
+	
+	<div class="modal-footer">
+		<button type="submit" class="btn btn-primary" id="novalnet_form_btn">
+			<i class="fa fa-check" aria-hidden="true"> </i>
+			{{ trans("Novalnet::PaymentMethod.submit_button_text") }}
+		</button>
+	</div>
+
+
+</form>
