@@ -443,9 +443,6 @@ class PaymentService
         
         if ( ( ! empty ($this->config->get('Novalnet.'.strtolower($paymentKey).'_shopping_type') ) && $save_data == 'true' ) ) {
 			$paymentRequestData['create_payment_ref'] = '1';
-			if ($paymentKey == 'NOVALNET_CC' && ($this->config->get('Novalnet.novalnet_cc_3d') == 'true' || $this->config->get('Novalnet.novalnet_cc_3d_fraudcheck') == 'true'))  {
-			$paymentRequestData['create_payment_ref'] = '0';
-			}
 		}
 	
         $url = $this->getPaymentData($paymentKey, $paymentRequestData, $payment_reference);
