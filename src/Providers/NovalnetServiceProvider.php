@@ -314,6 +314,7 @@ class NovalnetServiceProvider extends ServiceProvider
 								 'tid' => $tid,
 								 'customer_no' => $customerId,
 							     'oneclick' => $one_click_shopping,
+								'guaranteeEnabled' => trim($config->get('Novalnet.novalnet_sepa_payment_guarantee_active')),
 								 'endcustomername'=> empty(trim($endUserName)) ? $endCustomerName : $endUserName,
 								 'nnGuaranteeStatus' =>  empty($address->companyName) ? $guaranteeStatus : ''
 								 ]);
