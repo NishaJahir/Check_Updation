@@ -2,7 +2,7 @@
 {% set nn_sepa_new_acc_details="1" %}
 {% set display_field = 'block' %}
 {% set ref_display_field = 'none' %}
-{% if iban is not empty %}
+{% if iban is not empty and guaranteeEnabled != 'true' %}
 {% set nn_sepa_new_acc_details="0" %}
 {% set display_field = 'none' %}
 {% set ref_display_field = 'block' %}
