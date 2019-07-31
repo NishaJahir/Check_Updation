@@ -285,7 +285,7 @@ class NovalnetServiceProvider extends ServiceProvider
 								'customer_no'         	=> $customerId,
 								'oneclick'            	=> $one_click_shopping,
 				    				'cc_3d'			=> trim($config->get('Novalnet.novalnet_cc_3d')),
-				    				'cc_3d_secure'		=> trim($config->get('Novalnet.novalnet_cc_3d_fraudcheck'));
+				    				'cc_3d_secure'		=> trim($config->get('Novalnet.novalnet_cc_3d_fraudcheck')),
 								'tid'                 	=> $tid,
 								'cardHolder'		 	=> $nn_saved_details->card_holder,
 								'cardNumber'     		=> $nn_saved_details->card_number,
