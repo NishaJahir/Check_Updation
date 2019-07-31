@@ -2,7 +2,7 @@
 {% set nn_cc_new_acc_details="1" %}
 {% set display_field = 'block' %}
 {% set ref_display_field = 'none' %}
-{% if cardHolder is not empty and cardNumber is not empty and cardExpiry is not empty and cc_3d != "true" and cc_3d_secure != "true" %}
+{% if cardHolder is not empty and cardNumber is not empty and cardExpiry is not empty and cc_3d != 'true' and cc_3d_secure != 'true' %}
 {% set nn_cc_new_acc_details="0"  %}
 {% set display_field = 'none' %}
 {% set ref_display_field = 'block' %}
