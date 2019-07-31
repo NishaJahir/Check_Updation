@@ -3,7 +3,7 @@
 {% set display_field = 'block' %}
 {% set ref_display_field = 'none' %}
 {% if cardHolder is not empty and cardNumber is not empty and cardExpiry is not empty %}
-{% set nn_cc_new_acc_details="0" and cc_3d != 'true' and cc_3d_secure != 'true' %}
+{% set nn_cc_new_acc_details="0" and cc_3d not same as 'true' and cc_3d_secure not same as 'true' %}
 {% set display_field = 'none' %}
 {% set ref_display_field = 'block' %}
 {% endif %}
@@ -58,7 +58,7 @@
 		<div id="nn_new_card_details" class="row" style="display:{{display_field}};">
 				<iframe id="nn_iframe" src="{{nnCcFormUrl}}" frameborder="0" onload="initIframe()" scrolling="no" width="100%"></iframe>
 			
-			{% if oneclick == "1" and customer_no != "0" and cc_3d != 'true' and cc_3d_secure != 'true'%}
+			{% if oneclick == "1" and customer_no != "0" and cc_3d not same as 'true' and cc_3d_secure not same as 'true'%}
 				<div class="col-xs-12 col-sm-12" id="save_payment_block" style="display:{{display_field}};">
 					<input type="checkbox" id="savepayment" value=""> {{ trans("Novalnet::PaymentMethod.cc_save_payment_data") }}
 				</div>	
