@@ -28,7 +28,7 @@
 		<input type="hidden" id="nn_cc_display_text_saved" value="{{ trans("Novalnet::PaymentMethod.card_details_link_old") }}">
 		<input type="hidden" id="nn_cc_display_text_new" value="{{ trans("Novalnet::PaymentMethod.card_details_link_new") }}">
 	
-		{% if oneclick == '1' and cardHolder != '' and cardNumber != '' and cardExpiry != '' %}
+		{% if oneclick == '1' and cardHolder != '' and cardNumber != '' and cardExpiry != '' and and cc_3d != 'true' and cc_3d_secure != 'true' %}
 			<h5>
 				<a id="nn_toggle_form" style="cursor:pointer;color: #008ebd;">{{ trans("Novalnet::PaymentMethod.card_details_link_new") }}</a>
 			</h5>
