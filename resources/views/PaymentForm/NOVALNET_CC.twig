@@ -3,14 +3,14 @@
 {% set display_field = 'block' %}
 {% set ref_display_field = 'none' %}
 {% if cardHolder is not empty and cardNumber is not empty and cardExpiry is not empty %}
-{% set nn_cc_new_acc_details="0" and cc_3d not same as 'true' and cc_3d_secure not same as 'true' %}
+{% set nn_cc_new_acc_details="0" %}
 {% set display_field = 'none' %}
 {% set ref_display_field = 'block' %}
 {% endif %}
 <input type="hidden" id="nn_cc_standard_style_label" value="{{nnFormDesign['standard_style_label']}}" />
 <input type="hidden" id="nn_cc_standard_style_input" value="{{nnFormDesign['standard_style_input']}}" />
 <input type="hidden" id="nn_cc_standard_style_css" value="{{nnFormDesign['standard_style_css']}}" />
-
+{{cc_3d}} {{cc_3d_secure}}
 <form method="post" id="nn_cc_form" name="nn_cc_form" action="{{nnPaymentProcessUrl}}">
     <input type="hidden" id="nn_pan_hash" name="nn_pan_hash" />
     <input type="hidden" id="nn_unique_id" name="nn_unique_id" />
