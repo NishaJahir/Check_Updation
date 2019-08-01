@@ -363,30 +363,12 @@ class PaymentService
      */
     public function getRequestParameters(Basket $basket, $paymentKey = '', $save_data = false, $payment_reference = false)
     {
-        $billingAddressId = $basket->customerInvoiceAddressId;
-        $address = $this->addressRepository->findAddressById($billingAddressId);
-	$this->getLogger(__METHOD__)->error('address', $address);
-		$this->getLogger(__METHOD__)->error('address', $address->firstName);
-	    $this->getLogger(__METHOD__)->error('address', $address->lastName);
-        if(!empty($basket->customerShippingAddressId)){
+	   $customerName = $this->getCustomerName($basket);
+	    $this->getLogger(__METHOD__)->error('names', $customerName);
+	    if(!empty($basket->customerShippingAddressId)){
             $shippingAddress = $this->addressRepository->findAddressById($basket->customerShippingAddressId);
-        }
-	
-		foreach ($address->options as $option) {
-		if ($option->typeId == 12) {
-	            $name = $option->value;
-		}
-	}
-	$customerName = explode(' ', $name);
-	$firstname = $customerName[0];
-	if( count( $customerName ) > 1 ) {
-	    unset($customerName[0]);
-	    $lastname = implode(' ', $customerName);
-	} else {
-	    $lastname = $firstname;
-	}
-	$firstName = empty ($firstname) ? $lastname : $firstname;
-	$lastName = empty ($lastname) ? $firstname : $lastname;
+            }
+        
 	
         $account = pluginApp(AccountService::class);
         $customerId = $account->getAccountContactId();
@@ -399,8 +381,8 @@ class PaymentService
             'product'            => $this->paymentHelper->getNovalnetConfig('novalnet_product_id'),
             'tariff'             => $this->paymentHelper->getNovalnetConfig('novalnet_tariff_id'),
             'test_mode'          => (int)($this->config->get($testModeKey) == 'true'),
-            'first_name'         => !empty($address->firstName) ? $address->firstName : $firstName,
-            'last_name'          => !empty($address->lastName) ? $address->lastName : $lastName,
+            'first_name'         => $customerName[0],
+            'last_name'          => $customerName[1],
             'email'              => $address->email,
             'gender'             => 'u',
             'city'               => $address->town,
@@ -926,5 +908,29 @@ class PaymentService
 		return false;
 	}
 	
+       public function getCustomerName(Basket $basket) {
+		$billingAddressId = $basket->customerInvoiceAddressId;
+        	$address = $this->addressRepository->findAddressById($billingAddressId);
+	       foreach ($address->options as $option) {
+			if ($option->typeId == 12) {
+			    $name = $option->value;
+			    break;
+			}
+		}
+		$customerName = explode(' ', $name);
+		$firstname = $customerName[0];
+		if( count( $customerName ) > 1 ) {
+	    	unset($customerName[0]);
+	    	$lastname = implode(' ', $customerName);
+		} else {
+		    $lastname = $firstname;
+		}
+		$firstName = empty ($firstname) ? $lastname : $firstname;
+		$lastName = empty ($lastname) ? $firstname : $lastname;  
+	       
+	       $firstName = !empty($address->firstName) ? $address->firstName : $firstName;
+	       $lastName  = !empty($address->lastName) ? $address->lastName : $lastName;
+	       return [$firstName, $lastName];
+       }
 	
 }
