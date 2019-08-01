@@ -1,9 +1,7 @@
 <script src="{{ plugin_path('Novalnet') }}/js/novalnet_paypal.js"></script>
-{% if customer_no != '' %}
 {% set nn_paypal_new_acc_details='1' %}
 {% set display_field = 'block' %}
 {% set ref_display_field = 'none' %}
-{% endif %}
 {% if paypal_ref_id != '' and tid != '' %}
 {% set nn_paypal_new_acc_details='0' %}
 {% set display_field = 'none' %}
