@@ -222,6 +222,7 @@ class NovalnetServiceProvider extends ServiceProvider
 						$address = $addressRepository->findAddressById($billingAddressId);
 						$account = pluginApp(AccountService::class);
 						$customerId = $account->getAccountContactId();
+			    $this->getLogger(__METHOD__)->error('CNO', $customerId);
 						$one_click_shopping = trim($config->get('Novalnet.' . strtolower($paymentKey) . '_shopping_type'));
 				
 					if (!empty ($customerId) && !empty($one_click_shopping) ) {
