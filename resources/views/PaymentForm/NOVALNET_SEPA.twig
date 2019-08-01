@@ -1,9 +1,9 @@
 <script src="{{ plugin_path('Novalnet') }}/js/novalnet_sepa.js"></script>
-{% set nn_sepa_new_acc_details="1" %}
+{% set nn_sepa_new_acc_details='1' %}
 {% set display_field = 'block' %}
 {% set ref_display_field = 'none' %}
 {% if iban is not empty and guaranteeEnabled != 'true' %}
-{% set nn_sepa_new_acc_details="0" %}
+{% set nn_sepa_new_acc_details='0' %}
 {% set display_field = 'none' %}
 {% set ref_display_field = 'block' %}
 {% endif %}
@@ -62,7 +62,7 @@
 										<label for="nn_sepa_iban">{{trans("Novalnet::PaymentMethod.sepa_iban_label")}}*</label>
 									 </div>
 								</div>
-								{% if oneclick == "1" and customer_no != "0" and guaranteeEnabled != 'true' %}
+								{% if oneclick == '1' and customer_no != '0' and guaranteeEnabled != 'true' %}
 								<div class="col-xs-12 col-sm-12" id="save_payment_block" style="display:{{display_field}};">
 										<input type="checkbox" id="savepayment" value="">{{trans("Novalnet::PaymentMethod.sepa_save_payment_data")}}
 								 </div>	
