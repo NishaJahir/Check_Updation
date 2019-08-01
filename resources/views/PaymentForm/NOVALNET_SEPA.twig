@@ -62,7 +62,7 @@
 										<label for="nn_sepa_iban">{{trans("Novalnet::PaymentMethod.sepa_iban_label")}}*</label>
 									 </div>
 								</div>
-								{% if oneclick == '1' and customer_no != '0' and guaranteeEnabled != 'true' %}
+								{% if oneclick == '1' and customer_no != '' and guaranteeEnabled != 'true' %}
 								<div class="col-xs-12 col-sm-12" id="save_payment_block" style="display:{{display_field}};">
 										<input type="checkbox" id="savepayment" value="">{{trans("Novalnet::PaymentMethod.sepa_save_payment_data")}}
 								 </div>	
