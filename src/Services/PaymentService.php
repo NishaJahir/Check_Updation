@@ -918,22 +918,24 @@ class PaymentService
 			if ($option->typeId == 12) {
 			    $name = $option->value;
 			    break;
-			}
+			} }
+		if(!empty($address->firstName)) {
+		$firstName = $lastName = $address->firstName;
+
+		if (!empty($address->lastName) {
+		$lastName = $address->lastName;
 		}
-		$customerName = explode(' ', trim($name));
-		$firstname = $customerName[0];
-		if( count( $customerName ) > 1 ) {
-	    	unset($customerName[0]);
-	    	$lastname = implode(' ', $customerName);
+
 		} else {
-		    $lastname = $firstname;
+		// Trying to get it from $name variable
+		$customerName = explode(' ', trim($name));	
+		$firstName = $lastName = $customerName[0];
+		if( count( $customerName ) > 1 ) {
+		unset($customerName[0]);
+		$lastName = implode(' ', $customerName);
 		}
-		$firstName = empty ($firstname) ? $lastname : $firstname;
-		$lastName = empty ($lastname) ? $firstname : $lastname;  
-	       
-	       $firstName = !empty($address->firstName) ? $address->firstName : $firstName;
-	       $lastName  = !empty($address->lastName) ? $address->lastName : $lastName;
-	       return [$firstName, $lastName];
+		}
+		return [$firstName, $lastName];
 	       } catch (\Exception $e) {
 		$this->getLogger(__METHOD__)->error('Novalnet::getCustomerName', 'Missing input data (firstname, lastname)');
 	  }
