@@ -922,7 +922,7 @@ class PaymentService
 		if(!empty($address->firstName)) {
 		$firstName = $lastName = $address->firstName;
 
-		if (!empty($address->lastName) {
+		if (!empty($address->lastName)) {
 		$lastName = $address->lastName;
 		}
 
