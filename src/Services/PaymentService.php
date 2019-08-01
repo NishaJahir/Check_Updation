@@ -91,7 +91,6 @@ class PaymentService
                                 CountryRepositoryContract $countryRepository,
                                 WebstoreHelper $webstoreHelper,
                                 PaymentHelper $paymentHelper,
-				BasketRepositoryContract $basketRepository,
                                 TransactionService $transactionLogData)
     {
         $this->config                   = $config;
@@ -100,7 +99,6 @@ class PaymentService
         $this->countryRepository        = $countryRepository;
         $this->webstoreHelper           = $webstoreHelper;
         $this->paymentHelper            = $paymentHelper;
-	$this->basketRepository  = $basketRepository;
         $this->transactionLogData       = $transactionLogData;
     }
     
