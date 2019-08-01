@@ -91,6 +91,7 @@ class PaymentService
                                 CountryRepositoryContract $countryRepository,
                                 WebstoreHelper $webstoreHelper,
                                 PaymentHelper $paymentHelper,
+				BasketRepositoryContract $basketRepository,
                                 TransactionService $transactionLogData)
     {
         $this->config                   = $config;
@@ -99,6 +100,7 @@ class PaymentService
         $this->countryRepository        = $countryRepository;
         $this->webstoreHelper           = $webstoreHelper;
         $this->paymentHelper            = $paymentHelper;
+	$this->basketRepository  = $basketRepository;
         $this->transactionLogData       = $transactionLogData;
     }
     
@@ -365,6 +367,7 @@ class PaymentService
     {
         $billingAddressId = $basket->customerInvoiceAddressId;
         $address = $this->addressRepository->findAddressById($billingAddressId);
+	$this->getLogger(__METHOD__)->error('address', $address);
         if(!empty($basket->customerShippingAddressId)){
             $shippingAddress = $this->addressRepository->findAddressById($basket->customerShippingAddressId);
         }
@@ -922,4 +925,6 @@ class PaymentService
 		} 
 		return false;
 	}
+	
+	
 }
