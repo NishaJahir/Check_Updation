@@ -256,7 +256,7 @@ class NovalnetServiceProvider extends ServiceProvider
 						
 						if ($redirect && $paymentKey != 'NOVALNET_CC') { # Redirection payments
 			   
-							if ($paymentKey == 'NOVALNET_PAYPAL' && !empty($config->get('Novalnet.novalnet_paypal_shopping_type')) ) {
+							if ($paymentKey == 'NOVALNET_PAYPAL' && !empty($config->get('Novalnet.novalnet_paypal_shopping_type')) && $customerId != '') {
 			  
 							$content = $twig->render('Novalnet::PaymentForm.NOVALNET_PAYPAL', [
 							'paypal_ref_id' 	  => $nn_saved_details->paypal_reference_tid,
