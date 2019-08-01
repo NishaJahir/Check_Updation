@@ -220,9 +220,10 @@ class NovalnetServiceProvider extends ServiceProvider
 						$basket = $basketRepository->load();			
 						$billingAddressId = $basket->customerInvoiceAddressId;
 						$address = $addressRepository->findAddressById($billingAddressId);
+			    			$customerName = $this->getCustomerName($basket);
 						$account = pluginApp(AccountService::class);
 						$customerId = $account->getAccountContactId();
-			    $this->getLogger(__METHOD__)->error('CNO', $customerId);
+			    		        
 						$one_click_shopping = trim($config->get('Novalnet.' . strtolower($paymentKey) . '_shopping_type'));
 				
 					if (!empty ($customerId) && !empty($one_click_shopping) ) {
@@ -231,24 +232,6 @@ class NovalnetServiceProvider extends ServiceProvider
 						 $nn_saved_detils = end($saved_details)->additionalInfo;  
 					}
 						$nn_saved_details=json_decode($nn_saved_detils);
-								
-			    			foreach ($address->options as $option) {
-							if ($option->typeId == 12) {
-							    $name = $option->value;
-							}
-						}
-						$customerName = explode(' ', $name);
-						$firstname = $customerName[0];
-						if( count( $customerName ) > 1 ) {
-						    unset($customerName[0]);
-						    $lastname = implode(' ', $customerName);
-						} else {
-						    $lastname = $firstname;
-						}
-						$firstName = empty ($firstname) ? $lastname : $firstname;
-						$lastName = empty ($lastname) ? $firstname : $lastname;
-						$endCustomerName = $firstName .' '. $lastName;
-						$endUserName = $address->firstName .' '. $address->lastName;
 
 						$name = trim($config->get('Novalnet.' . strtolower($paymentKey) . '_payment_name'));
 						$paymentName = ($name ? $name : $paymentHelper->getTranslatedText(strtolower($paymentKey)));
@@ -316,7 +299,7 @@ class NovalnetServiceProvider extends ServiceProvider
 								 'customer_no' => $customerId,
 							     'oneclick' => $one_click_shopping,
 								'guaranteeEnabled' => trim($config->get('Novalnet.novalnet_sepa_payment_guarantee_active')),
-								 'endcustomername'=> empty(trim($endUserName)) ? $endCustomerName : $endUserName,
+								 'endcustomername'=> $customerName[0] .' '. $customerName[1],
 								 'nnGuaranteeStatus' =>  empty($address->companyName) ? $guaranteeStatus : ''
 								 ]);
                                 }
