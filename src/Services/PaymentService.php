@@ -909,6 +909,7 @@ class PaymentService
 	}
 	
        public function getCustomerName(Basket $basket) {
+	       try {
 		$billingAddressId = $basket->customerInvoiceAddressId;
         	$address = $this->addressRepository->findAddressById($billingAddressId);
 	       foreach ($address->options as $option) {
@@ -917,7 +918,7 @@ class PaymentService
 			    break;
 			}
 		}
-		$customerName = explode(' ', $name);
+		$customerName = explode(' ', trim($name));
 		$firstname = $customerName[0];
 		if( count( $customerName ) > 1 ) {
 	    	unset($customerName[0]);
@@ -931,6 +932,9 @@ class PaymentService
 	       $firstName = !empty($address->firstName) ? $address->firstName : $firstName;
 	       $lastName  = !empty($address->lastName) ? $address->lastName : $lastName;
 	       return [$firstName, $lastName];
+	       } catch (\Exception $e) {
+		$this->getLogger(__METHOD__)->error('Novalnet::getCustomerName', 'Missing input data (firstname, lastname)');
+	  }
        }
 	
 }
