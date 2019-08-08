@@ -220,7 +220,7 @@ class NovalnetServiceProvider extends ServiceProvider
 						$basket = $basketRepository->load();			
 						$billingAddressId = $basket->customerInvoiceAddressId;
 						$address = $addressRepository->findAddressById($billingAddressId);
-			    			$customerName = $this->getCustomerName($basket);
+			    			$customerName = $paymentService->getCustomerName($basket);
 						$account = pluginApp(AccountService::class);
 						$customerId = $account->getAccountContactId();
 			    		        
