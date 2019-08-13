@@ -408,6 +408,7 @@ class NovalnetServiceProvider extends ServiceProvider
 			$this->getLogger(__METHOD__)->error('novalnet payment', $paymentKey);
 		$saved_details = $dataBase->query(TransactionLog::class)->where('paymentName', '=', strtolower($paymentKey))->where('orderNo', '=', $order->id)->get();		
 		$test = json_decode($saved_details[0]->bankDetails);
+		$this->getLogger(__METHOD__)->error('test', $test);
 		$orderPdfGenerationModel->advice = 'Novalnet Transaction Details:'. PHP_EOL . 'IBAN : ' .' '. $test->IBAN . PHP_EOL . 'BIC : ' . ' ' . $test->BIC;
 		$document_type = $event->getDocType();
 	      	if ($document_type == 'invoice') {
