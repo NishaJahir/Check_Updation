@@ -41,6 +41,7 @@ use Plenty\Modules\Plugin\DataBase\Contracts\Query;
 use Novalnet\Models\TransactionLog;
 use Plenty\Modules\Order\Pdf\Events\OrderPdfGenerationEvent;
 use Plenty\Modules\Order\Pdf\Models\OrderPdfGeneration;
+use Plenty\Modules\Payment\Contracts\PaymentRepositoryContract;
 
 use Novalnet\Methods\NovalnetInvoicePaymentMethod;
 use Novalnet\Methods\NovalnetPrepaymentPaymentMethod;
@@ -99,6 +100,7 @@ class NovalnetServiceProvider extends ServiceProvider
                           TransactionService $transactionLogData,
                           Twig $twig,
                           ConfigRepository $config,
+			 PaymentRepositoryContract $paymentRepository,
                           DataBase $dataBase,
                           EventProceduresService $eventProceduresService)
     {
